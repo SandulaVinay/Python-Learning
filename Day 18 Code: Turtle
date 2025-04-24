@@ -1,0 +1,25 @@
+from turtle import Turtle
+jack = Turtle()
+while jack:
+    # To draw a square 
+    for i in range(0,4):
+        jack.forward(100) # Moves forward
+        jack.right(90)    # Turned 90 degrees didn't moved from the axis.
+
+    # To draw a triangle 
+    for i in range(3):
+        jack.forward(100)
+        jack.left(120)
+
+    # To draw a Circle
+    for circle in range(20):
+        jack.right(20)
+        jack.forward(10)
+
+    # For dashed lines -----------
+    for i in range(50):
+        jack.pendown()
+        jack.forward(10)
+        jack.penup()
+        jack.forward(10)
+    break
