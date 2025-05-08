@@ -1,159 +1,85 @@
-#--------------------------Snake Game--------------------------#
-
-# Snake Game in Python using Turtle Graphics
-# Full Version: Snake movement, food eating, wall and tail collision, and scoreboard
-
+# Constants: Starting position is a constant should be in capitals.
+'''
+Constants in python are variables whose values are meant to remain unchanged throughout the life of a program.
+Constants are usally defined in all uppercase lettes with underscore(_) between words.
+They are typically placed at the top of the file.
+'''
 from turtle import Turtle, Screen
 import time
 import random
 
-# --- Screen Setup ---
 screen = Screen()
-screen.setup(width=600, height=600)       # Set the game screen size
-screen.bgcolor("black")                   # Set background color to black
-screen.title("Snake Game")                # Set window title
-screen.tracer(0)                           # Disable automatic screen updates for manual control
+screen.title("Development Mode")
+screen.setup(width = 600, height = 600)
+screen.bgcolor("black")
+screen.tracer(0)
+STARTING_POSITION = [(0,0),(-20,0),(-40,0)]
+MOVE_DISTANCE = 20
 
-# --- Constants ---
-START_POSITION = [(0, 0), (-20, 0), (-40, 0)]  # Starting positions for the initial snake segments
-MOVE_DISTANCE = 20                             # Distance each segment moves
-UP = 90
-DOWN = 270
-LEFT = 180
-RIGHT = 0
-
-# --- Snake Class ---
 class Snake:
     def __init__(self):
-        self.segments = []                  # List to hold all segments of the snake
-        self.create_snake()                 # Create the snake body
-        self.head = self.segments[0]        # The first segment is considered the head
-
-    def create_snake(self):
-        for position in START_POSITION:
-            self.add_segment(position)      # Create each initial segment
-
-    def add_segment(self, position):
-        segment = Turtle("square")         # Each segment is a white square turtle
-        segment.color("white")
-        segment.penup()
-        segment.goto(position)
-        self.segments.append(segment)
-
-    def reset(self):
-        # Move all current segments off screen, clear the list, and recreate the snake
-        for segment in self.segments:
-            segment.goto(1000, 1000)
-        self.segments.clear()
+        self.segments = [] # Empty List
         self.create_snake()
         self.head = self.segments[0]
 
-    def extend(self):
-        # Add a new segment to the snake at the position of the last segment
-        self.add_segment(self.segments[-1].position())
-
+    def create_snake(self):
+        for position in STARTING_POSITION:
+            new_segment = Turtle()
+            new_segment.shape("square")
+            new_segment.color("white")
+            new_segment.penup()
+            new_segment.goto(position)
+            self.segments.append(new_segment)
+   
     def move(self):
-        # Move each segment to the position of the one in front of it
-        for i in range(len(self.segments) - 1, 0, -1):
-            new_x = self.segments[i - 1].xcor()
-            new_y = self.segments[i - 1].ycor()
-            self.segments[i].goto(new_x, new_y)
-        self.head.forward(MOVE_DISTANCE)
+        for seg_num in range(len(self.segments) -1, 0, -1):
+            new_x = self.segments[seg_num -1].xcor()
+            new_y = self.segments[seg_num -1].ycor()
+            self.segments[seg_num].goto(new_x, new_y)
+        self.segments[0].forward(MOVE_DISTANCE)
 
-    # Movement controls: change the direction of the head
     def up(self):
-        if self.head.heading() != DOWN:
-            self.head.setheading(UP)
+        self.segments[0].setheading(90)
+        self.head.setheading(UP)
 
     def down(self):
-        if self.head.heading() != UP:
-            self.head.setheading(DOWN)
+        self.segments[0].setheading(270)
+        self.head.setheading(DOWN)
 
     def left(self):
-        if self.head.heading() != RIGHT:
-            self.head.setheading(LEFT)
+        self.segments[0].setheading(180)
+        self.setheading(LEFT)
 
     def right(self):
-        if self.head.heading() != LEFT:
-            self.head.setheading(RIGHT)
+        self.segments[0].setheading(0)
+        self.setheading(RIGHT)
 
-# --- Food Class ---
 class Food(Turtle):
-    def __init__(self):
+    def __init__ (self):
         super().__init__()
-        self.shape("circle")              # Make food a circle
+        self.shape("circle")
         self.penup()
-        self.color("yellow")              # Yellow colored food
-        self.speed("fastest")             # Appear instantly
-        self.refresh()                    # Place it in a random spot initially
+        self.shapesize(stretch_len = 0.5, stretch_wid = 0.5)
+        self.color("blue")
+        self.speed(10)
+        random_x = random.randint(-200, 200)
+        random_y = random.randint(-200, 200)
+        self.goto(random_x, random_y)
 
-    def refresh(self):
-        # Move the food to a new random location within bounds
-        x = random.randint(-280, 280)
-        y = random.randint(-280, 280)
-        self.goto(x, y)
+snake = Snake()
+food = Food()
 
-# --- Scoreboard Class ---
-class Scoreboard(Turtle):
-    def __init__(self):
-        super().__init__()
-        self.score = 0
-        self.high_score = 0               # Track the highest score
-        self.color("white")
-        self.penup()
-        self.goto(0, 260)                 # Position scoreboard at the top center
-        self.hideturtle()
-        self.update_score()              # Display initial score
+#Key board bindings
+screen.listen()
+screen.onkey(snake.up, "Up")
+screen.onkey(snake.left, "Left")
+screen.onkey(snake.down, "Down")
+screen.onkey(snake.right, "Right")
 
-    def update_score(self):
-        self.clear()
-        self.write(f"Score: {self.score}  High Score: {self.high_score}", align="center", font=("Courier", 16, "normal"))
-
-    def increase_score(self):
-        self.score += 1
-        self.update_score()
-
-    def reset(self):
-        if self.score > self.high_score:
-            self.high_score = self.score   # Save new high score if applicable
-        self.score = 0
-        self.update_score()
-
-# --- Game Setup ---
-snake = Snake()             # Create snake object
-food = Food()               # Create food object
-scoreboard = Scoreboard()   # Create scoreboard
-
-# --- Keybindings ---
-screen.listen()                           # Start listening for key presses
-screen.onkey(snake.up, "w")              # W to go up
-screen.onkey(snake.down, "s")            # S to go down
-screen.onkey(snake.left, "a")            # A to go left
-screen.onkey(snake.right, "d")           # D to go right
-
-# --- Game Loop ---
 game_is_on = True
 while game_is_on:
-    screen.update()                      # Manually refresh screen for smoother animation
-    time.sleep(0.1)                      # Delay to control snake speed
-    snake.move()                         # Move the snake one step
+    screen.update()
+    time.sleep(0.1)
+    snake.move()
 
-    # --- Collision with food ---
-    if snake.head.distance(food) < 15:   # If the head is close enough to the food
-        food.refresh()                   # Move the food
-        snake.extend()                   # Grow the snake
-        scoreboard.increase_score()      # Update the score
-
-    # --- Collision with wall ---
-    if (abs(snake.head.xcor()) > 290 or abs(snake.head.ycor()) > 290):
-        scoreboard.reset()               # Reset score (but keep high score)
-        snake.reset()                    # Reset snake position and length
-
-    # --- Collision with tail ---
-    for segment in snake.segments[1:]:
-        if snake.head.distance(segment) < 10:
-            scoreboard.reset()           # Reset on self-collision
-            snake.reset()
-
-# Exit the game when screen is clicked
 screen.exitonclick()
