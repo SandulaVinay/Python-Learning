@@ -1,0 +1,205 @@
+# Day 17 -- Project Notes
+"""
+The code uses **Object-Oriented Programming (OOP)**.
+    
+Think of OOP like building with LEGOs. Instead of one giant instruction manual for the whole model, you have smaller, specific manuals for different parts.
+
+  * `question_model.py`: This is the manual for building a single "Question" LEGO block. It tells us that every question block will have a `text` and an `answer`.
+  * `quiz_brain.py`: This is the manual for the "Quiz Brain" LEGO piece. This piece knows how to keep track of the score, which question is next, and how to check if an answer is right.
+  * `main.py`: This is the main instruction booklet that puts all the LEGO pieces together. It creates a bunch of `Question` blocks from a list, gives them to the `QuizBrain` piece, and then runs the quiz until all the questions are gone.
+
+Now, let's look at the code in `quiz_brain.py` and understand how the "Quiz Brain" LEGO piece works.
+
+-----
+
+### **`quiz_brain.py` Explained**
+
+This file contains the `QuizBrain` class, which holds all the logic for the quiz itself.
+
+#### **The `QuizBrain` Class**
+
+```python
+class QuizBrain:
+```
+
+  * This line defines a **class** named `QuizBrain`. A class is like a blueprint or a template for creating objects. An object is a specific instance of that class. In this case, we're creating a template for a quiz-managing object.
+
+#### **The `__init__` Method (The Constructor)**
+
+```python
+    def __init__(self, q_list):
+        self.question_number = 0
+        self.score = 0
+        self.question_list = q_list
+```
+
+  * `def __init__(self, q_list):`
+
+      * The `__init__` method is a special function called the **constructor**. It gets called automatically whenever you create a new `QuizBrain` object.
+      * `self`: This is a reference to the specific object that's being created. It's a way for the object to refer to itself.
+      * `q_list`: This is the parameter that's passed into the constructor. In our `main.py` file, we'll see that a list of questions is passed into this `q_list` parameter when the `QuizBrain` object is created.
+
+  * `self.question_number = 0`
+
+      * This line creates a **property** (or **attribute**) for the object called `question_number` and sets its initial value to `0`. It will be used to track the index of the current question in the list.
+
+  * `self.score = 0`
+
+      * Similarly, this creates an attribute called `score` and initializes it to `0`. This will keep track of how many questions the user has answered correctly.
+
+  * `self.question_list = q_list`
+
+      * This line takes the list of questions that was passed into the constructor (in `q_list`) and saves it as a property of the `QuizBrain` object itself. This way, the object remembers the list of questions for later.
+
+#### **The `still_has_questions` Method**
+
+```python
+    def still_has_questions(self):
+        return self.question_number < len(self.question_list)
+```
+
+  * `def still_has_questions(self):`
+      * This defines a **method** (a function inside a class) called `still_has_questions`.
+      * `return`: This keyword gives a result back to whoever called the method.
+      * `self.question_number < len(self.question_list)`: This is a **comparison**. It checks if the current `question_number` (which starts at 0) is less than the total number of questions in the `question_list`. `len()` is a built-in Python function that returns the number of items in a list.
+      * This method returns `True` if there are still questions left to be asked, and `False` if all questions have been asked.
+
+#### **The `next_question` Method**
+
+```python
+    def next_question(self):
+        current_question = self.question_list[self.question_number]
+        self.question_number += 1
+        user_answer = input(f"Q.{self.question_number}:{current_question.text} (True/False): ")
+        self.check_answer(user_answer, current_question.ans)
+```
+
+  * `def next_question(self):`
+
+      * This method is called to move the quiz to the next question.
+
+  * `current_question = self.question_list[self.question_number]`
+
+      * This is the key line for getting the next question.
+      * `self.question_list`: This refers to the list of `Question` objects we saved in the constructor.
+      * `[self.question_number]`: The square brackets `[]` are how we access an item in a list by its **index**. Since `self.question_number` starts at 0, this gets the first question. The next time this method is called, `self.question_number` will be 1, so it will get the second question, and so on.
+      * `current_question`: This is a variable that now holds the entire `Question` object for the current question.
+
+  * `self.question_number += 1`
+
+      * This is a shorthand way of saying `self.question_number = self.question_number + 1`. It increments the question number by 1, so the next time `next_question` is called, it will get the next question in the list.
+
+  * `user_answer = input(...)`
+
+      * `input()` is a built-in Python function that prints a message to the user and waits for them to type something and press Enter. The typed text is then stored in the `user_answer` variable.
+      * `f"Q.{self.question_number}:{current_question.text} ..."`: This is an **f-string**, a modern way to format strings in Python. It allows you to embed variables directly inside a string. So, it will show the current question number and the text of the question from the `current_question` object.
+
+  * `self.check_answer(user_answer, current_question.ans)`
+
+      * This line calls another method within the same `QuizBrain` object, `check_answer`, and passes two parameters to it: the user's input (`user_answer`) and the correct answer (`current_question.ans`) from the question object.
+
+#### **The `check_answer` Method**
+
+```python
+    def check_answer(self, user_answer, correct_answer):
+        if user_answer.lower() == correct_answer.lower():
+            self.score += 1
+            print("You got it right!")
+        else:
+            print("That's wrong.")
+        print(f"The correct answer was: {correct_answer}.")
+        print(f"Your current score is: {self.score} / {self.question_number}")
+```
+
+  * `def check_answer(...)`: This method takes two parameters: the user's answer and the correct answer for the question.
+
+  * `if user_answer.lower() == correct_answer.lower():`
+
+      * This is an **if statement**, a core concept in programming for making decisions. It checks if a condition is true.
+      * `.lower()`: This is a string method that converts the string to all lowercase letters. This is a clever trick to make the comparison **case-insensitive**, so "True", "true", and "TRUE" are all treated the same.
+      * If the user's answer (in lowercase) matches the correct answer (in lowercase), the code inside the `if` block runs.
+
+  * `self.score += 1`: If the answer is correct, the `score` attribute of the object is increased by 1.
+
+  * `else:`: If the condition in the `if` statement is `False` (meaning the answers don't match), the code inside the `else` block runs.
+
+  * The `print()` statements then provide feedback to the user, showing if they were right or wrong, and displaying their current score and the number of questions they have attempted so far.
+"""
+
+#Basic Notes
+
+#The object should be in Pascal Case and remaning can be in snakecase
+# class User:
+#     pass 
+
+
+# user_1 = User()
+# user_1.id = "1"
+# user_1.name = "vinay"
+# print(f"{user_1.name} {user_1.id}")
+
+# If a new user has to add then again we have to assign user_2 to the User object (class) 
+# user_2 = User()
+# user_2.id = 2
+# user_2.name = "siddhu"
+# print(f"Name:{user_2.name}")
+
+# To eliminate this inital assigning we can use the constructer in python
+# Constructer is a special function which is __init__ function 
+
+class User:
+
+    def __init__(self, user_id, user_name): 
+        self.id = user_id
+        self.name = user_name
+        self.followers = 0 #Assigning Default followers which is 0
+        self.following = 0
+
+    def follow(self, user):
+        user.followers += 1
+        self.following += 1
+"""
+The logic works like this 
+user_1.follow(user_2)
+Inside follow():
+→ user_2.followers += 1   # user_1 made user_2 gain a follower
+→ user_1.following += 1   # user_1 is now following someone
+"""
+
+user_1 = User("001", "Vinay")
+user_2 = User("002", "Siddhu")
+
+#User1 follows user 2
+user_1.follow(user_2)
+#user_2.follow(user_1)
+
+print(f"Name: {user_1.name} Id: {user_1.id} Followers:{user_1.followers} Following:{user_1.following}")
+print(f"Name: {user_2.name} Id: {user_2.id} Followers:{user_2.followers} Follwoing:{user_2.following}")
+print(user_1.followers)
+print(user_1.following)
+print(user_2.followers)
+print(user_2.following)
+
+
+"""
+Attributes: Attributes are the data or properties an object holds.
+Example: follower = 0 — This means the object has an attribute called follower with a value of 0.
+
+Methods:Methods are functions associated with an object that define what the object can do.
+Example: You can define a method that changes follower to 2 in the later part of the code.
+
+Code:
+class User:
+    def __init__(self):
+        self.follower = 0   # Attribute
+
+    def gain_follower(self):   # Method
+        self.follower = 2
+
+u = User()
+print(u.follower)  # Output: 0
+u.gain_follower()
+print(u.follower)  # Output: 2
+"""
+
+

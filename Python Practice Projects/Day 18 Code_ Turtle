@@ -1,0 +1,209 @@
+# ----------------------------- #
+# IMPORTING REQUIRED MODULES
+# ----------------------------- #
+import random
+import turtle
+
+# ----------------------------- #
+# TURTLE SETUP FOR RANDOM MOVES
+# ----------------------------- #
+jack = turtle.Turtle()
+jack.shape("turtle")        # Turtle shape for visual effect
+jack.speed(1)               # Set turtle speed (1 = slowest)
+jack.pensize(10)            # Thickness of the pen
+
+turn = True
+while turn:
+    # ----------------------------- #
+    # RANDOM TURTLE MOVEMENT LOGIC
+    # ----------------------------- #
+    jack_moves = random.choice(["forward", "backward", "left", "right"])
+    jack_distance = random.randint(1, 25)
+    jack_color = random.choice(["red", "green", "blue", "yellow"])
+    jack.color(jack_color)
+
+    # Movement logic based on random choice
+    if jack_moves == "forward":
+        jack.forward(jack_distance)
+    elif jack_moves == "backward":
+        jack.backward(jack_distance)
+    elif jack_moves == "left":
+        jack.left(jack_distance)
+    elif jack_moves == "right":
+        jack.right(jack_distance)
+
+    # Stop after one random move (remove this to make it loop infinitely)
+    # turn = False # To exit the loop un-comment.
+
+# ---------------------------------------- #
+# DRAWING DIAGONAL POLYGONS WITH VARIATION
+# ---------------------------------------- #
+
+colours = ["red", "blue", "green", "yellow"]  # Color options for each polygon
+
+def sides(num_sides):
+    """Draw a polygon with `num_sides` sides"""
+    angle = 360 / num_sides
+    for i in range(num_sides):
+        jack.forward(100)
+        jack.right(angle)
+
+# Draw polygons from triangle (3 sides) to decagon (10 sides)
+for j in range(3, 11):
+    jack.color(random.choice(colours))
+    sides(j)
+
+# ---------------------------------------- #
+# CLOSE TURTLE SCREEN ON CLICK
+# ---------------------------------------- #
+jack.screen()
+jack.exitonclick()
+
+# ---------------------------------------- #
+# NEW TURTLE INSTANCE FOR SHAPE DRAWINGS
+# ---------------------------------------- #
+jack = Turtle()
+
+# ------------------------ #
+# DRAWING A SQUARE
+# ------------------------ #
+for i in range(4):
+    jack.forward(100)
+    jack.right(90)
+
+# ------------------------ #
+# DRAWING A TRIANGLE
+# ------------------------ #
+for i in range(3):
+    jack.forward(100)
+    jack.left(120)
+
+# ------------------------ #
+# DRAWING A CIRCLE (approximate)
+# ------------------------ #
+for circle in range(18):   # 20 steps of 10 units approximates a circle
+    jack.right(20)
+    jack.forward(10)
+
+# ------------------------ #
+# DRAWING DASHED LINE
+# ------------------------ #
+for i in range(50):
+    jack.pendown()
+    jack.forward(10)
+    jack.penup()
+    jack.forward(10)
+
+
+# ------------------------------------------------------- #
+#          Moving Turtle as user requested
+#          (Turtle moves based on user given command
+# ------------------------------------------------------- #
+
+from turtle import Turtle, Screen
+
+jack = Turtle()  # Create a Turtle object named 'jack'
+screen = Screen()  # Create a Screen object, which is the drawing window
+
+# Movement functions
+def move_forward():
+    jack.forward(10)  # Move the turtle 'jack' forward by 10 pixels
+
+def move_backward():
+    jack.backward(10)  # Move the turtle 'jack' backward by 10 pixels
+
+def turn_left():
+    new_heading = jack.heading() + 10  # Get the current heading and add 10 degrees (counter-clockwise)
+    jack.setheading(new_heading)      # Set the new heading of the turtle
+
+def turn_right():\
+    new_heading = jack.heading() - 10  # Get the current heading and subtract 10 degrees (clockwise)
+    jack.setheading(new_heading)       # Set the new heading of the turtle
+
+def clear():
+    jack.clear()    # Erase all drawings made by the turtle
+    jack.penup()    # Lift the pen so the turtle doesn't draw while moving
+    jack.home()     # Move the turtle back to the center of the screen with heading 0
+    jack.pendown()  # Put the pen down so the turtle can draw again
+
+# Event listeners
+screen.listen()                     # Start listening for keyboard events in the screen window
+screen.onkey(move_forward, "f")    # Call the 'move_forward' function when the 'f' key is pressed
+screen.onkey(move_backward, "b")   # Call the 'move_backward' function when the 'b' key is pressed
+screen.onkey(turn_left, "l")      # Call the 'turn_left' function when the 'l' key is pressed
+screen.onkey(turn_right, "r")     # Call the 'turn_right' function when the 'r' key is pressed
+screen.onkey(clear, "c")          # Call the 'clear' function when the 'c' key is pressed
+
+# Keep the window open
+screen.exitonclick()                # Keep the drawing window open until it is manually closed
+```
+----------------------------------------------------------------------------
+#                              Turtle Race
+-----------------------------------------------------------------------------
+# Importing required modules
+from turtle import Turtle, Screen  # Turtle for creating turtle objects, Screen for window control
+import random  # To generate random numbers for turtle movement
+
+# Creating individual turtle racers with different colors
+jack = Turtle()             # Create turtle object 'jack'
+jack.color('blue')         # Set jack's color to blue
+jack.shape('turtle')       # Set shape to 'turtle'
+
+snoop = Turtle()
+snoop.color('yellow')
+snoop.shape('turtle')
+
+roman = Turtle()
+roman.color('brown')
+roman.shape('turtle')
+
+david = Turtle()
+david.color('pink')
+david.shape('turtle')
+
+john = Turtle()
+john.color('red')
+john.shape('turtle')
+
+wick = Turtle()
+wick.color('green')
+wick.shape('turtle')
+
+# Function to move each turtle to its starting point
+def turtle_starting_point(turtle_name, distance):
+    turtle_name.penup()              # Lift the pen so it doesn't draw lines
+    turtle_name.backward(310)        # Move turtle to the left (start line)
+    turtle_name.left(90)             # Turn turtle to face upward
+    turtle_name.forward(distance)    # Move turtle up or down to spread out vertically
+    turtle_name.right(90)            # Turn turtle to face forward again
+
+# Function to set starting positions of all turtles
+def set_turtle_starting_point():
+    turtle_starting_point(jack, 0)       # Place jack in the center
+    turtle_starting_point(snoop, 60)     # Place snoop slightly above jack
+    turtle_starting_point(roman, 90)     # Place roman higher
+    turtle_starting_point(david, 120)    # Place david highest
+    turtle_starting_point(john, -30)     # Place john below jack
+    turtle_starting_point(wick, -60)     # Place wick lowest
+
+# Call the function to position all turtles before race begins
+set_turtle_starting_point()
+
+# Create a list of all turtles so we can loop through them
+turtles = [jack, snoop, roman, david, john, wick]
+
+# Start the race
+is_race_on = True  # Boolean flag to control while loop
+
+while is_race_on:
+    for turtle in turtles:
+        turtle.forward(random.randint(0,10))  # Move turtle by a random amount (0–10)
+        if turtle.xcor() > 360:               # Check if turtle crossed the finish line
+            is_race_on = False                # Stop the race
+            print(f"The winner is: {turtle.pencolor()}")  # Print the winning turtle's color
+
+# Create the screen and keep it open until clicked
+screen = Screen()
+screen.exitonclick()  # Prevent window from closing immediately
+
+

@@ -1,0 +1,404 @@
+## ✅ Objective:
+Build a basic **Library Management System** with `Book` and `Member` classes. This allows:
+- Viewing book info
+- Checking book availability
+- Borrowing books
+
+---
+
+## 🧠 Changes Made:
+- Fixed method names and logic
+- Improved method definitions (added `self` where needed)
+- Tracked borrowed books
+- Allowed searching by multiple authors
+- Clear comments explaining every block
+
+---
+
+## ✅ Final Code with Explanations
+
+```python
+book_data = [
+    {"book_id": 1, "title": "The Alchemist", "author": "Paulo Coelho", "is_available": True},
+    {"book_id": 2, "title": "1984", "author": "George Orwell", "is_available": True},
+    {"book_id": 3, "title": "To Kill a Mockingbird", "author": "Harper Lee", "is_available": True},
+    {"book_id": 4, "title": "Pride and Prejudice", "author": "Jane Austen", "is_available": True},
+    {"book_id": 5, "title": "The Great Gatsby", "author": "F. Scott Fitzgerald", "is_available": True},
+    {"book_id": 6, "title": "The Catcher in the Rye", "author": "J.D. Salinger", "is_available": True},
+    {"book_id": 7, "title": "Sapiens", "author": "Yuval Noah Harari", "is_available": True},
+    {"book_id": 8, "title": "Becoming", "author": "Michelle Obama", "is_available": True},
+    {"book_id": 9, "title": "Rich Dad Poor Dad", "author": "Robert Kiyosaki", "is_available": True},
+    {"book_id": 10, "title": "Atomic Habits", "author": "James Clear", "is_available": True},
+    {"book_id": 11, "title": "The Power of Now", "author": "Eckhart Tolle", "is_available": True},
+    {"book_id": 12, "title": "Ikigai", "author": "Francesc Miralles", "is_available": True},
+    {"book_id": 13, "title": "Think and Grow Rich", "author": "Napoleon Hill", "is_available": True},
+    {"book_id": 14, "title": "Start With Why", "author": "Simon Sinek", "is_available": True},
+    {"book_id": 15, "title": "The 5 AM Club", "author": "Robin Sharma", "is_available": True},
+    {"book_id": 16, "title": "The Monk Who Sold His Ferrari", "author": "Robin Sharma", "is_available": True},
+    {"book_id": 17, "title": "The Subtle Art of Not Giving a F*ck", "author": "Mark Manson", "is_available": True},
+    {"book_id": 18, "title": "Deep Work", "author": "Cal Newport", "is_available": True},
+    {"book_id": 19, "title": "Can't Hurt Me", "author": "David Goggins", "is_available": True},
+    {"book_id": 20, "title": "Born a Crime", "author": "Trevor Noah", "is_available": True},
+    {"book_id": 21, "title": "Educated", "author": "Tara Westover", "is_available": True},
+    {"book_id": 22, "title": "The Four Agreements", "author": "Don Miguel Ruiz", "is_available": True},
+    {"book_id": 23, "title": "Daring Greatly", "author": "Brené Brown", "is_available": True},
+    {"book_id": 24, "title": "The Lean Startup", "author": "Eric Ries", "is_available": True},
+    {"book_id": 25, "title": "Zero to One", "author": "Peter Thiel", "is_available": True},
+    {"book_id": 26, "title": "Tools of Titans", "author": "Tim Ferriss", "is_available": True},
+    {"book_id": 27, "title": "Crushing It!", "author": "Gary Vaynerchuk", "is_available": True},
+    {"book_id": 28, "title": "Hooked", "author": "Nir Eyal", "is_available": True},
+    {"book_id": 29, "title": "The Psychology of Money", "author": "Morgan Housel", "is_available": True},
+    {"book_id": 30, "title": "How to Win Friends and Influence People", "author": "Dale Carnegie", "is_available": True},
+    {"book_id": 31, "title": "Man’s Search for Meaning", "author": "Viktor Frankl", "is_available": True},
+    {"book_id": 32, "title": "Mindset", "author": "Carol Dweck", "is_available": True},
+    {"book_id": 33, "title": "Drive", "author": "Daniel Pink", "is_available": True},
+    {"book_id": 34, "title": "The Code Book", "author": "Simon Singh", "is_available": True},
+    {"book_id": 35, "title": "Brief Answers to the Big Questions", "author": "Stephen Hawking", "is_available": True},
+    {"book_id": 36, "title": "The Theory of Everything", "author": "Stephen Hawking", "is_available": True},
+    {"book_id": 37, "title": "Cosmos", "author": "Carl Sagan", "is_available": True},
+    {"book_id": 38, "title": "Astrophysics for People in a Hurry", "author": "Neil deGrasse Tyson", "is_available": True},
+    {"book_id": 39, "title": "The Selfish Gene", "author": "Richard Dawkins", "is_available": True},
+    {"book_id": 40, "title": "The Gene", "author": "Siddhartha Mukherjee", "is_available": True},
+    {"book_id": 41, "title": "Grit", "author": "Angela Duckworth", "is_available": True},
+    {"book_id": 42, "title": "12 Rules for Life", "author": "Jordan Peterson", "is_available": True},
+    {"book_id": 43, "title": "The War of Art", "author": "Steven Pressfield", "is_available": True},
+    {"book_id": 44, "title": "The Art of Happiness", "author": "Dalai Lama", "is_available": True},
+    {"book_id": 45, "title": "Flow", "author": "Mihaly Csikszentmihalyi", "is_available": True},
+    {"book_id": 46, "title": "The Power of Habit", "author": "Charles Duhigg", "is_available": True},
+    {"book_id": 47, "title": "Make Time", "author": "Jake Knapp", "is_available": True},
+    {"book_id": 48, "title": "Limitless", "author": "Jim Kwik", "is_available": True},
+    {"book_id": 49, "title": "Digital Minimalism", "author": "Cal Newport", "is_available": True},
+    {"book_id": 50, "title": "Essentialism", "author": "Greg McKeown", "is_available": True},]
+member_data = [
+    {"member_id": 1, "name": "Aarav Patel", "email": "aarav.patel@example.com", "phone": "9876543210"},
+    {"member_id": 2, "name": "Ishita Sharma", "email": "ishita.sharma@example.com", "phone": "9123456789"},
+    {"member_id": 3, "name": "Raj Mehta", "email": "raj.mehta@example.com", "phone": "9988776655"},
+    {"member_id": 4, "name": "Sneha Reddy", "email": "sneha.reddy@example.com", "phone": "9871234567"},
+    {"member_id": 5, "name": "Karan Singh", "email": "karan.singh@example.com", "phone": "9812345678"},
+    {"member_id": 6, "name": "Pooja Verma", "email": "pooja.verma@example.com", "phone": "9723456780"},
+    {"member_id": 7, "name": "Vikram Joshi", "email": "vikram.joshi@example.com", "phone": "9654321789"},
+    {"member_id": 8, "name": "Neha Kapoor", "email": "neha.kapoor@example.com", "phone": "9945678912"},
+    {"member_id": 9, "name": "Anil Kumar", "email": "anil.kumar@example.com", "phone": "9887654321"},
+    {"member_id": 10, "name": "Divya Desai", "email": "divya.desai@example.com", "phone": "9776543210"},
+    {"member_id": 11, "name": "Rohan Bhatia", "email": "rohan.bhatia@example.com", "phone": "9865432109"},
+    {"member_id": 12, "name": "Meera Iyer", "email": "meera.iyer@example.com", "phone": "9956781234"},
+    {"member_id": 13, "name": "Siddharth Jain", "email": "siddharth.jain@example.com", "phone": "9988123456"},
+    {"member_id": 14, "name": "Ananya Rao", "email": "ananya.rao@example.com", "phone": "9876781234"},
+    {"member_id": 15, "name": "Ritesh Shetty", "email": "ritesh.shetty@example.com", "phone": "9922334455"},
+    {"member_id": 16, "name": "Tanya Gupta", "email": "tanya.gupta@example.com", "phone": "9966778899"},
+    {"member_id": 17, "name": "Amit Sinha", "email": "amit.sinha@example.com", "phone": "9811223344"},
+    {"member_id": 18, "name": "Priya Nair", "email": "priya.nair@example.com", "phone": "9798989898"},
+    {"member_id": 19, "name": "Arjun Das", "email": "arjun.das@example.com", "phone": "9789012345"},
+    {"member_id": 20, "name": "Simran Malhotra", "email": "simran.malhotra@example.com", "phone": "9777012345"},
+    {"member_id": 21, "name": "Harsh Vardhan", "email": "harsh.vardhan@example.com", "phone": "9666667788"},
+    {"member_id": 22, "name": "Shreya Sen", "email": "shreya.sen@example.com", "phone": "9554433221"},
+    {"member_id": 23, "name": "Nikhil Goyal", "email": "nikhil.goyal@example.com", "phone": "9898123456"},
+    {"member_id": 24, "name": "Ruchi Mishra", "email": "ruchi.mishra@example.com", "phone": "9845671234"},
+    {"member_id": 25, "name": "Varun Khanna", "email": "varun.khanna@example.com", "phone": "9832123456"},
+    {"member_id": 26, "name": "Kritika Yadav", "email": "kritika.yadav@example.com", "phone": "9876012345"},
+    {"member_id": 27, "name": "Rahul Malviya", "email": "rahul.malviya@example.com", "phone": "9781112233"},
+    {"member_id": 28, "name": "Avni Chawla", "email": "avni.chawla@example.com", "phone": "9654321998"},
+    {"member_id": 29, "name": "Dev Sharma", "email": "dev.sharma@example.com", "phone": "9767891234"},
+    {"member_id": 30, "name": "Ira Bhatt", "email": "ira.bhatt@example.com", "phone": "9911223344"},
+    {"member_id": 31, "name": "Saurabh Negi", "email": "saurabh.negi@example.com", "phone": "9844312345"},
+    {"member_id": 32, "name": "Nandini Saxena", "email": "nandini.saxena@example.com", "phone": "9977885566"},
+    {"member_id": 33, "name": "Yash Chauhan", "email": "yash.chauhan@example.com", "phone": "9856782345"},
+    {"member_id": 34, "name": "Aisha Khan", "email": "aisha.khan@example.com", "phone": "9867891234"},
+    {"member_id": 35, "name": "Raghav Tripathi", "email": "raghav.tripathi@example.com", "phone": "9876678990"},
+    {"member_id": 36, "name": "Saumya Pillai", "email": "saumya.pillai@example.com", "phone": "9777888999"},
+    {"member_id": 37, "name": "Abhay Raut", "email": "abhay.raut@example.com", "phone": "9654123456"},
+    {"member_id": 38, "name": "Bhavna Bansal", "email": "bhavna.bansal@example.com", "phone": "9845612345"},
+    {"member_id": 39, "name": "Rishi Kulkarni", "email": "rishi.kulkarni@example.com", "phone": "9977112233"},
+    {"member_id": 40, "name": "Tanvi Ahuja", "email": "tanvi.ahuja@example.com", "phone": "9856012345"},
+    {"member_id": 41, "name": "Manav Ghosh", "email": "manav.ghosh@example.com", "phone": "9756677889"},
+    {"member_id": 42, "name": "Lavanya Batra", "email": "lavanya.batra@example.com", "phone": "9822123456"},
+    {"member_id": 43, "name": "Dhruv Sehgal", "email": "dhruv.sehgal@example.com", "phone": "9811123456"},
+    {"member_id": 44, "name": "Nisha Prasad", "email": "nisha.prasad@example.com", "phone": "9798981234"},
+    {"member_id": 45, "name": "Vivek Chauhan", "email": "vivek.chauhan@example.com", "phone": "9867894567"},
+    {"member_id": 46, "name": "Mira Das", "email": "mira.das@example.com", "phone": "9755566123"},
+    {"member_id": 47, "name": "Ritvik Anand", "email": "ritvik.anand@example.com", "phone": "9767123456"},
+    {"member_id": 48, "name": "Palak Sharma", "email": "palak.sharma@example.com", "phone": "9898776655"},
+    {"member_id": 49, "name": "Zoya Ali", "email": "zoya.ali@example.com", "phone": "9845567890"},
+    {"member_id": 50, "name": "Aniket Bose", "email": "aniket.bose@example.com", "phone": "9887765432"},]
+
+from Data import book_data, member_data
+
+# -------------------- BOOK CLASS --------------------
+class Book:
+    def __init__(self, book_id, title, author, is_available):
+        """
+        Initializes a book with its ID, title, author, and availability status.
+        """
+        self.book_id = book_id
+        self.title = title
+        self.author = author
+        self.is_available = is_available
+
+    def __str__(self):
+        """
+        Displays readable information when print(book) is called.
+        """
+        return f"ID: {self.book_id} | Title: {self.title} | Author: {self.author} | Available: {self.is_available}"
+
+    def borrow(self):
+        """
+        Marks the book as borrowed (i.e., not available).
+        """
+        if self.is_available:
+            self.is_available = False
+            print(f"'{self.title}' has been borrowed.")
+        else:
+            print(f"'{self.title}' is already borrowed.")
+
+    def make_available(self):
+        """
+        Marks the book as available again (e.g., when returned).
+        """
+        if not self.is_available:
+            self.is_available = True
+            print(f"'{self.title}' is now available.")
+        else:
+            print(f"'{self.title}' is already available.")
+
+    @staticmethod
+    def book_by_id(book_list, book_id):
+        """
+        Searches for a book in the list by its ID.
+        """
+        for book in book_list:
+            if book.book_id == book_id:
+                return book
+        return None
+
+    @staticmethod
+    def books_by_author(book_list, author):
+        """
+        Returns a list of all books written by a given author.
+        """
+        author_books = [book for book in book_list if book.author.lower() == author.lower()]
+        if author_books:
+            return author_books
+        else:
+            print("No books found by that author.")
+            return []
+
+# -------------------- CREATE BOOK OBJECTS --------------------
+book_objects = []
+for data in book_data:
+    book = Book(data["book_id"], data["title"], data["author"], data["is_available"])
+    book_objects.append(book)
+
+# -------------------- MEMBER CLASS --------------------
+class Member:
+    def __init__(self, member_id, name, email, phone):
+        """
+        Initializes a library member with personal info and a list to store borrowed books.
+        """
+        self.member_id = member_id
+        self.name = name
+        self.email = email
+        self.phone = phone
+        self.borrowed_books = []
+
+    def borrow_book(self, book_id):
+        """
+        Allows the member to borrow a book if available.
+        Tracks borrowed books inside the member's list.
+        """
+        book = Book.book_by_id(book_objects, book_id)
+        if book:
+            if book.is_available:
+                book.borrow()
+                self.borrowed_books.append(book)
+                print(f"{self.name} has borrowed '{book.title}'.")
+            else:
+                print(f"Sorry, '{book.title}' is already borrowed.")
+        else:
+            print("Invalid Book ID. Book not found.")
+
+    def list_borrowed_books(self):
+        """
+        Prints all the books borrowed by the member.
+        """
+        if self.borrowed_books:
+            print(f"{self.name}'s borrowed books:")
+            for book in self.borrowed_books:
+                print(f" - {book.title} by {book.author}")
+        else:
+            print(f"{self.name} has not borrowed any books.")
+
+# -------------------- SAMPLE USAGE --------------------
+
+# Find and print a book by ID
+print("\n📚 Searching book by ID:")
+found_book = Book.book_by_id(book_objects, 1)
+if found_book:
+    print(found_book)
+else:
+    print("Book with that ID not found.")
+
+# Find and print books by author
+print("\n👨‍🏫 Searching books by Author:")
+author_books = Book.books_by_author(book_objects, "George Orwell")
+for b in author_books:
+    print(b)
+
+# Member borrows a book
+print("\n🙋 Member borrowing a book:")
+member = Member(101, "Alice", "alice@example.com", "1234567890")
+member.borrow_book(1)  # Book ID 1
+
+# Check borrowed books
+print("\n📖 Member's borrowed books:")
+member.list_borrowed_books()
+```
+
+---
+
+## 🔍 How It Works:
+| Component | Purpose |
+|----------|---------|
+| **Book class** | Handles book data, search, availability |
+| **Member class** | Handles members borrowing and tracking |
+| **book_objects** | Stores all created book instances |
+| **book_by_id** | Retrieves book by unique ID |
+| **books_by_author** | Retrieves all books from an author |
+| **borrow_book()** | Lets members borrow a book if available |
+| **list_borrowed_books()** | View what books a member borrowed |
+
+---
+
+Library Management System
+│
+├── Data (imported)
+│   ├── book_data
+│   └── member_data
+│
+├── Class: Book
+│   ├── __init__(book_id, title, author, is_available)
+│   ├── __str__()
+│   ├── borrow()                -> Marks book as borrowed
+│   ├── make_available()        -> Makes book available again
+│   ├── book_by_id(book_list, book_id)         -> Static method to get book by ID
+│   └── books_by_author(book_list, author)     -> Static method to get all books by author
+│
+├── book_objects = []           # List to store all Book instances
+│   └── For loop to populate it from book_data
+│
+├── Class: Member
+│   ├── __init__(member_id, name, email, phone)
+│   ├── borrow_book(book_id)    -> Member borrows a book by ID
+│   └── list_borrowed_books()   -> Shows member's borrowed books
+│
+└── Sample Usage
+    ├── Book.book_by_id()         -> Find book by ID
+    ├── Book.books_by_author()    -> Find book(s) by author
+    ├── member = Member(...)      -> Create a member
+    ├── member.borrow_book()      -> Borrow a book
+    └── member.list_borrowed_books() -> Show borrowed books
+  
+
+
+#------------------ Project: Student Enrollment and Management System**
+# Sample data for 50 students
+students_data = {
+    1001: {"name": "Alice Smith", "age": 20, "major": "Computer Science"},
+    1002: {"name": "Bob Johnson", "age": 22, "major": "Electrical Engineering"},
+    1003: {"name": "Charlie Brown", "age": 21, "major": "Mechanical Engineering"},
+    1004: {"name": "David Lee", "age": 23, "major": "Civil Engineering"},
+    1005: {"name": "Eva Williams", "age": 21, "major": "Computer Science"},
+    1006: {"name": "Frank White", "age": 24, "major": "Information Technology"},
+    1007: {"name": "Grace Miller", "age": 22, "major": "Electrical Engineering"},
+    1008: {"name": "Harry Davis", "age": 23, "major": "Civil Engineering"},
+    1009: {"name": "Isabelle Clark", "age": 21, "major": "Mechanical Engineering"},
+    1010: {"name": "Jack Turner", "age": 25, "major": "Computer Science"},
+    1011: {"name": "Karen Moore", "age": 22, "major": "Chemical Engineering"},
+    1012: {"name": "Leo Jackson", "age": 23, "major": "Civil Engineering"},
+    1013: {"name": "Monica Harris", "age": 20, "major": "Electrical Engineering"},
+    1014: {"name": "Nathan Scott", "age": 22, "major": "Mechanical Engineering"},
+    1015: {"name": "Olivia Young", "age": 21, "major": "Computer Science"},
+    1016: {"name": "Peter Adams", "age": 24, "major": "Information Technology"},
+    1017: {"name": "Quentin King", "age": 23, "major": "Electrical Engineering"},
+    1018: {"name": "Rachel Thompson", "age": 21, "major": "Mechanical Engineering"},
+    1019: {"name": "Steve Martinez", "age": 25, "major": "Computer Science"},
+    1020: {"name": "Tina Robinson", "age": 22, "major": "Chemical Engineering"},
+    1021: {"name": "Ursula White", "age": 20, "major": "Civil Engineering"},
+    1022: {"name": "Victor Evans", "age": 23, "major": "Mechanical Engineering"},
+    1023: {"name": "Wendy Harris", "age": 21, "major": "Computer Science"},
+    1024: {"name": "Xavier Phillips", "age": 22, "major": "Electrical Engineering"},
+    1025: {"name": "Yvonne Rodriguez", "age": 24, "major": "Information Technology"},
+    1026: {"name": "Zachary Lee", "age": 22, "major": "Chemical Engineering"},
+    1027: {"name": "Alice Wright", "age": 21, "major": "Mechanical Engineering"},
+    1028: {"name": "Ben Carter", "age": 23, "major": "Computer Science"},
+    1029: {"name": "Clara Martinez", "age": 20, "major": "Civil Engineering"},
+    1030: {"name": "Daniel Robinson", "age": 22, "major": "Electrical Engineering"},
+    1031: {"name": "Eva Clark", "age": 23, "major": "Information Technology"},
+    1032: {"name": "Fiona Davis", "age": 24, "major": "Computer Science"},
+    1033: {"name": "George Walker", "age": 21, "major": "Mechanical Engineering"},
+    1034: {"name": "Hannah Hill", "age": 22, "major": "Chemical Engineering"},
+    1035: {"name": "Ian White", "age": 23, "major": "Civil Engineering"},
+    1036: {"name": "Jennifer Scott", "age": 21, "major": "Electrical Engineering"},
+    1037: {"name": "Kevin Brown", "age": 24, "major": "Information Technology"},
+    1038: {"name": "Laura Lee", "age": 22, "major": "Computer Science"},
+    1039: {"name": "Matthew Williams", "age": 23, "major": "Mechanical Engineering"},
+    1040: {"name": "Nicole Green", "age": 21, "major": "Chemical Engineering"},
+    1041: {"name": "Oscar Turner", "age": 23, "major": "Civil Engineering"},
+    1042: {"name": "Peter Clark", "age": 22, "major": "Electrical Engineering"},
+    1043: {"name": "Quincy Adams", "age": 21, "major": "Computer Science"},
+    1044: {"name": "Rachel Scott", "age": 23, "major": "Mechanical Engineering"},
+    1045: {"name": "Sam Johnson", "age": 24, "major": "Chemical Engineering"},
+    1046: {"name": "Tracy Brown", "age": 21, "major": "Electrical Engineering"},
+    1047: {"name": "Ursula Davis", "age": 22, "major": "Information Technology"},
+    1048: {"name": "Vincent White", "age": 23, "major": "Computer Science"},
+    1049: {"name": "Wendy Walker", "age": 21, "major": "Civil Engineering"},
+    1050: {"name": "Xavier Harris", "age": 22, "major": "Mechanical Engineering"}
+}
+
+# Sample data for 10 courses
+courses_data = {
+    "CSE101": {"course_name": "Introduction to Programming", "credits": 3},
+    "ELE102": {"course_name": "Digital Circuits", "credits": 4},
+    "ME103": {"course_name": "Thermodynamics", "credits": 3},
+    "CSE201": {"course_name": "Data Structures", "credits": 4},
+    "ELE203": {"course_name": "Electronics", "credits": 3},
+    "ME205": {"course_name": "Fluid Mechanics", "credits": 3},
+    "CSE301": {"course_name": "Operating Systems", "credits": 4},
+    "ELE301": {"course_name": "Control Systems", "credits": 4},
+    "ME303": {"course_name": "Material Science", "credits": 3},
+    "CSE401": {"course_name": "Machine Learning", "credits": 3}
+}
+
+# Sample data for grades of students in each course
+grades_data = {
+    1001: {"CSE101": "A", "ELE102": "B", "ME103": "A", "CSE201": "B", "ELE203": "C", "ME205": "A", "CSE301": "B", "ELE301": "A", "ME303": "B", "CSE401": "A"},
+    1002: {"CSE101": "B", "ELE102": "A", "ME103": "B", "CSE201": "B", "ELE203": "A", "ME205": "C", "CSE301": "B", "ELE301": "C", "ME303": "A", "CSE401": "B"},
+    1003: {"CSE101": "C", "ELE102": "C", "ME103": "A", "CSE201": "C", "ELE203": "B", "ME205": "A", "CSE301": "C", "ELE301": "A", "ME303": "C", "CSE401": "C"},
+    # Add similar entries for other students (1004 to 1050)
+}
+
+class Course:
+    def __init__ (self, course_name, credits):
+        self.course_name = course_name
+        self.credits = credits
+    
+    def course_by_name (self, given_course_name):
+        if self.course_name == given_course_name:
+            print(f"{self.credits}")
+    
+    def courses_by_credit(self, given_credit):
+        if self.credits == given_credit:
+            print(f"{self.course_name}")
+
+course_object = []
+# Method 2 with items(tuple) it works because of working on a dicitonary in a dictionary
+for id, info in courses_data.items():
+    course_credit = Course(info["course_name"], info["credits"])
+    course_object.append(course_credit)
+
+
+for course_credit in course_object:
+    course = course_credit.course_by_name("Data Structures")
+
+for course in course_object:
+    course.courses_by_credit(4)
+

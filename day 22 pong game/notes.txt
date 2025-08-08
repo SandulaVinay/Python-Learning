@@ -1,0 +1,30 @@
+# Day 22 - Pong Game Notes
+
+## Overview
+This is a recreation of the classic Pong game using Python and the turtle module.
+
+## Project Structure
+- **main.py** - Contains the main game loop and setup.
+- **paddle.py** - Paddle class for player controls.
+- **ball.py** - Ball class that handles movement and collision.
+- **scoreboard.py** - Scoreboard class to keep track of points.
+- **notes.txt** - This file with explanation and tips.
+
+## Game Logic Explained
+1. **Ball Movement**: Moves in x and y direction with a constant speed.
+2. **Wall Collision**: If the ball touches the top or bottom wall (±280), y direction is reversed.
+3. **Paddle Collision**: If the ball is within 50 pixels of the paddle and on the paddle’s side, reverse x direction and slightly increase speed.
+4. **Miss Detection**:
+   - If ball passes the right paddle → Left player scores.
+   - If ball passes the left paddle → Right player scores.
+   - Ball is reset to the center and starts moving again.
+
+## Tips for Understanding
+- `ball.move_speed` helps simulate acceleration. The smaller it becomes, the faster the ball moves.
+- The `.distance()` method from `Turtle` calculates distance between ball and paddle for collision detection.
+- `screen.tracer(0)` turns off automatic screen updates. You manually update using `screen.update()` to improve performance.
+
+## Turtle Math Notes
+- The screen height is 600, so the top edge is at +300 and bottom is at -300.
+- We use ±280 to leave a 20-pixel margin since the ball size is approx 20px.
+- `bounce_y` and `bounce_x` reverse direction by multiplying by -1.
