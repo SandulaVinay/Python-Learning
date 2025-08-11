@@ -2,7 +2,8 @@
 ````markdown
 # Beginner’s Guide to Python Data Analysis with Pandas
 
-Welcome! This guide explains essential Python code snippets for working with tabular data using [Pandas](https://pandas.pydata.org/). It covers everything from reading CSV files to analyzing and exporting data, with detailed comments at each step so even absolute beginners can follow along.
+Welcome! This guide explains essential Python code snippets for working with tabular data using [Pandas](https://pandas.pydata.org/).
+It covers everything from reading CSV files to analyzing and exporting data, with detailed comments at each step so even absolute beginners can follow along.
 
 ---
 
