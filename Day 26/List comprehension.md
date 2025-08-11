@@ -1,125 +1,102 @@
-# Python List Comprehension – Beginner to Advanced Notes
+# Python Comprehensions – Study Notes
 
-List comprehension in Python is a concise way to create new lists by applying an expression to each item in an iterable (like lists, tuples, or strings), optionally including a condition for filtering.
+This guide covers **List Comprehension** and **Dictionary Comprehension** in Python with clear explanations, syntax, examples, and real-time use cases.
 
 ---
 
-## 📌 Syntax
+## 📌 Table of Contents
+1. [List Comprehension](#1-list-comprehension)
+    - [Definition](#definition)
+    - [Syntax](#syntax)
+    - [Basic Examples](#basic-examples)
+    - [Conditional Comprehension](#conditional-comprehension)
+    - [Exercises](#exercises)
+2. [Dictionary Comprehension](#2-dictionary-comprehension)
+    - [Definition](#definition-1)
+    - [Syntax](#syntax-1)
+    - [Examples](#examples)
+    - [Summary Table](#summary-table)
 
+---
+
+## 1. List Comprehension
+
+### Definition
+**List comprehension** is a concise way to create lists in Python using a single line of code.  
+It replaces the need for writing multiple lines with loops and `append()`.
+
+
+---
+
+### Syntax
 ```python
 new_list = [expression for item in iterable if condition]
 ````
 
-* **expression** → The operation or value to add to the new list.
-* **item** → The variable representing each element in the iterable.
-* **iterable** → A sequence (list, tuple, string, etc.) you loop through.
-* **condition** *(optional)* → A filter to include only certain items.
-
-### ✅ Real-Time Example
-
-```python
-numbers = [1, 2, 3, 4, 5]
-squared_even_numbers = [n * n for n in numbers if n % 2 == 0]
-print(squared_even_numbers)  # Output: [4, 16]
-```
+* **expression** → The operation or value to store in the list.
+* **item** → Variable that takes each value from the iterable.
+* **iterable** → Any Python sequence (list, range, string, etc.).
+* **condition** *(optional)* → Filter which items to include.
 
 ---
 
-## **Q1: Normal Loop vs List Comprehension**
+### Basic Examples
 
-**Question:**
-Write a Python program to add 1 to each number in a given list using:
-
-1. A normal `for` loop
-2. List comprehension.
-
-**Answer:**
+**Example 1: Normal loop vs. List comprehension**
 
 ```python
-# Normal for loop
 numbers = [1, 2, 3]
+# Normal loop
+result = []
 for n in numbers:
-    add = n + 1
-    print(add)
+    result.append(n + 1)
+print(result)
 
 # List comprehension
-numbers = [1, 2, 3]
-list_comprehension = [n + 1 for n in numbers]
-print(list_comprehension)
+result = [n + 1 for n in numbers]
+print(result)
 ```
 
----
-
-## **Q2: String Iteration**
-
-**Question:**
-Convert the word `"vinay"` into a list of individual characters using list comprehension.
-
-**Answer:**
+**Example 2: String into list of characters**
 
 ```python
 name = "vinay"
-list_comprehension = [letter for letter in name]
-print(list_comprehension)  # Output: ['v', 'i', 'n', 'a', 'y']
+letters = [letter for letter in name]
+print(letters)   # ['v', 'i', 'n', 'a', 'y']
 ```
 
----
-
-## **Q3: Range with List Comprehension**
-
-**Question:**
-Generate a list of numbers from 1 to 5 using `range()` inside a list comprehension.
-
-**Answer:**
+**Example 3: Range in list comprehension**
 
 ```python
-list_comprehensive = [num for num in range(1, 6)]
-print(list_comprehensive)  # Output: [1, 2, 3, 4, 5]
+nums = [n * 1 for n in range(1, 6)]
+print(nums)  # [1, 2, 3, 4, 5]
 ```
 
 ---
 
-## **Q4: Filter Short Names**
+### Conditional Comprehension
 
-**Question:**
-Given a list of names, filter and return only those with less than 4 characters using list comprehension.
-
-**Answer:**
+**Example 4: Filter short names**
 
 ```python
 names = ["vinay", "Shankari", "Pallavi", "Sruthi", "Indhu", "Sid", "sui"]
 short_names = [name for name in names if len(name) < 4]
-print(short_names)  # Output: ['Sid', 'sui']
+print(short_names)  # ['Sid', 'sui']
 ```
 
----
-
-## **Q5: Transform Long Names to Uppercase**
-
-**Question:**
-From a list of names, create a new list with only names having more than 5 characters, and convert them to uppercase using list comprehension.
-
-**Answer:**
+**Example 5: Convert long names to uppercase**
 
 ```python
-names = ["vinay", "Shankari", "Pallavi", "Sruthi", "Indhu", "Sid", "sui"]
-long_names_upper = [name.upper() for name in names if len(name) > 5]
-print(long_names_upper)  # Output: ['SHANKARI', 'PALLAVI', 'SRUTHI']
+long_names = [name.upper() for name in names if len(name) > 5]
+print(long_names)  # ['SHANKARI', 'PALLAVI', 'SRUTHI', 'INDHU']
 ```
 
 ---
 
-## **Q6: Squaring Numbers**
+### Exercises
 
-**Question:**
-Given a list of numbers, return a list containing the square of each number using list comprehension.
-
-Example input:
-`[1, 1, 2, 3, 5, 8, 13, 21, 34, 55]`
-Expected output:
-`[1, 1, 4, 9, 25, 64, 169, 441, 1156, 3025]`
-
-**Answer:**
+**Q1: Squaring Numbers**
+*Create a list of squared values from an existing list.*
 
 ```python
 numbers = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
@@ -127,80 +104,34 @@ squared_numbers = [num * num for num in numbers]
 print(squared_numbers)
 ```
 
+**Output:**
+
+```
+[1, 1, 4, 9, 25, 64, 169, 441, 1156, 3025]
+```
+
 ---
 
-## **Q7: Filtering Even Numbers**
-
-**Question:**
-Given a list of strings containing numbers,
-
-1. Convert them into integers.
-2. Create a new list containing only even numbers.
-   Use list comprehension for both steps.
-
-**Answer:**
+**Q2: Filtering Even Numbers**
+*Convert strings to integers, then filter only even numbers.*
 
 ```python
 list_of_strings = ['9', '0', '32', '8', '2', '8', '64', '29', '42', '99']
 numbers = [int(num) for num in list_of_strings]
 result = [num for num in numbers if num % 2 == 0]
-print(result)  # Output: [0, 32, 8, 2, 8, 64, 42]
+print(result)
+```
+
+**Output:**
+
+```
+[0, 32, 8, 2, 8, 64, 42]
 ```
 
 ---
 
-## **Q8: Data Overlap from Files**
-
-**Question:**
-Two text files, `file1.txt` and `file2.txt`, each contain a list of numbers (one per line).
-Write a Python program to:
-
-1. Read both files.
-2. Find the numbers common to both files.
-3. Store them in a list of integers.
-   Use list comprehension to solve this.
-
-Example:
-
-**file1.txt**
-
-```
-3
-6
-5
-8
-33
-12
-7
-4
-72
-2
-42
-13
-```
-
-**file2.txt**
-
-```
-3
-6
-13
-5
-7
-89
-12
-3
-33
-34
-1
-344
-42
-```
-
-Expected output:
-`[3, 6, 5, 33, 12, 7, 42, 13]`
-
-**Answer:**
+**Q3: Data Overlap**
+*Find numbers that appear in both `file1.txt` and `file2.txt`.*
 
 ```python
 with open("file1.txt") as f1:
@@ -213,77 +144,98 @@ result = [num for num in file1_numbers if num in file2_numbers]
 print(result)
 ```
 
----
+**Example Output:**
 
-## **Q9: Square Only Even Numbers**
-
-**Question:**
-From a list of numbers, return a new list containing the square of only the even numbers.
-
-**Answer:**
-
-```python
-numbers = [1, 2, 3, 4, 5, 6]
-even_squares = [n ** 2 for n in numbers if n % 2 == 0]
-print(even_squares)  # Output: [4, 16, 36]
+```
+[3, 6, 5, 33, 12, 7, 42, 13]
 ```
 
 ---
 
-## **Q10: Convert Names to Uppercase**
+## 2. Dictionary Comprehension
 
-**Question:**
-Given a list of names, return a new list where each name is converted to uppercase using list comprehension.
+### Definition
 
-**Answer:**
+**Dictionary comprehension** allows you to create dictionaries in a single line, just like list comprehension but with key-value pairs.
+
+---
+
+### Syntax
 
 ```python
-names = ["vinay", "Angela", "Varun"]
-uppercase_names = [name.upper() for name in names]
-print(uppercase_names)  # Output: ['VINAY', 'ANGELA', 'VARUN']
+new_dict = {key_expression: value_expression for item in iterable if condition}
+```
+
+* **key\_expression** → Defines dictionary key.
+* **value\_expression** → Defines dictionary value.
+* **iterable** → Any iterable like list or dictionary.
+* **condition** *(optional)* → Filters which items to include.
+
+---
+
+### Examples
+
+**Example 1: Assign Random Scores to Students**
+
+```python
+import random
+
+names = ["vinay", "Shankari", "Pallavi", "Sruthi"]
+student_scores = {student: random.randint(1, 100) for student in names}
+print(student_scores)
+```
+
+**Output Example:**
+
+```
+{'vinay': 87, 'Shankari': 45, 'Pallavi': 93, 'Sruthi': 62}
 ```
 
 ---
 
-## **Q11: First Letter of Each Word**
-
-**Question:**
-Given a list of words, create a list of their first letters using list comprehension.
-
-**Answer:**
+**Example 2: Filter Passed Students**
 
 ```python
-words = ["apple", "banana", "cherry"]
-first_letters = [word[0] for word in words]
-print(first_letters)  # Output: ['a', 'b', 'c']
+passed_students = {student: score for (student, score) in student_scores.items() if score > 60}
+print(passed_students)
+```
+
+**Output Example:**
+
+```
+{'vinay': 87, 'Pallavi': 93, 'Sruthi': 62}
 ```
 
 ---
 
-## **Q12: Filter Numbers Greater than 10**
-
-**Question:**
-From a list of numbers, create a list containing only numbers greater than 10 using list comprehension.
-
-**Answer:**
+**Example 3: Filter Failed Students**
 
 ```python
-numbers = [5, 12, 7, 18, 3, 25]
-greater_than_10 = [n for n in numbers if n > 10]
-print(greater_than_10)  # Output: [12, 18, 25]
+failed_students = {student: score for (student, score) in student_scores.items() if score < 60}
+print(f"Failed Students: {failed_students}")
+```
+
+**Output Example:**
+
+```
+Failed Students: {'Shankari': 45}
 ```
 
 ---
 
-## 📝 Summary Table – List Comprehension Patterns
+### Summary Table
 
-| Pattern                    | Example                                           | Description                   |
-| -------------------------- | ------------------------------------------------- | ----------------------------- |
-| Basic transformation       | `[n+1 for n in numbers]`                          | Adds 1 to each element        |
-| Filtering                  | `[n for n in numbers if n%2==0]`                  | Keeps only even numbers       |
-| String to list             | `[ch for ch in "vinay"]`                          | Breaks string into characters |
-| Conditional transformation | `[name.upper() for name in names if len(name)>5]` | Uppercase long names          |
+| Pattern        | Example                                            | Description                      |
+| -------------- | -------------------------------------------------- | -------------------------------- |
+| Basic creation | `{n: n**2 for n in range(5)}`                      | Creates keys & values from range |
+| With function  | `{name: random.randint(1, 100) for name in names}` | Assigns random values            |
+| With filter    | `{k: v for k, v in dict.items() if v > 60}`        | Keeps only matching items        |
 
 ---
 
-**💡 Tip:** Always start with a normal `for` loop to understand the logic, then rewrite it as a list comprehension for cleaner, shorter code.
+**💡 Tip:** Comprehensions make your code shorter, cleaner, and more Pythonic. Use them for quick transformations and filtering instead of writing long loops.
+
+```
+
+Do you want me to also **merge this comprehension study file** into your **existing GitHub SQL_Interview_QA.md** so that **all your Python & SQL prep is in a single file** for uploads? That way you have one mega study guide.
+```
