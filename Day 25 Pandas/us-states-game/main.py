@@ -21,10 +21,12 @@ while len(gussed_state) < 50:
         prompt="What's another state's name?").title()
 
     if answer_state == "Exit":
-        missing_states = []
-        for state in state_list:
-            if state not in gussed_state:
-                missing_states.append(state)
+        # missing_states = []
+        # for state in state_list:
+        #     if state not in gussed_state:
+        #         missing_states.append(state)
+        #Replaced above code with this below single code line using List Comprehension
+        missing_states = [state for state in state_list if state not in gussed_state]
         missed_states = pandas.DataFrame(missing_states)
         missed_states.to_csv("States to learn.csv")
         break
