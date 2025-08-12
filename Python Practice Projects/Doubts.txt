@@ -1,0 +1,13 @@
+While working with turtle library.
+we can't user write method with out assigning input into it. 
+
+Example:
+import turtle
+
+vinay = turtle
+screen = turtle.Screen()
+vinay.write() # output: TypeError: write() missing 1 required positional argument: 'arg'
+vinay.write("Working") # output: Working
+screen = screen.exitonclick()
+
+Doubt: How to create a method like this by giving default if user failed to give or pass the value it should throw the error.
